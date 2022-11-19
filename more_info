@@ -1,0 +1,82 @@
+I advice reading up on dictionaries at https://realpython.com/python-dicts/
+(to save time read needed parts)
+and for working with dictionaries, json, and json files read https://medium.com/analytics-vidhya/python-dictionary-and-json-a-comprehensive-guide-ceed58a3e2ed#:~:text=Python%20has%20a%20library%20called,load()%20and%20loads()%20.
+in incognito mode
+
+NOTE: I changed the structure of our fake db, the keys are now phone numbers and values remain the same.
+I removed the 'data' key and and 'list' values
+
+
+
+fake_db = {
+
+	"09034323234":
+		{
+		"name": "thor",
+		"created": Datetime,
+		"phone": "09034323234",
+		"location": "",
+		"state": 1, // it can be 0, 1. It is needed to know stage of registration
+		"history": ["complain1", "complain2"]
+		},
+	"09098376634":
+		{
+		"name": "",
+		"created": Datetime,
+		"phone": "09098376634",
+		"location": "",
+		"state": 1, // it can be 0, 1. It is needed to know stage of registration
+		"history": ["complain1", "complain2"]
+		}
+}
+
+
+
+def handle_pre_registration(text,phone):   // this is for someone with state == 0. i.e handle unregistered user
+	"""
+	For now I only implemented logic to only ask for name for complete registration using 'state' to check for level of registration
+	"""
+	user = fake_db.get("phone")   // we use this to get the user info in our db
+	user.update({"state": 1})   // this is used to chnge state of user
+	user.update({"name": text})    // this is used to set name of user. the text
+	fake_db["phone"].update(user)
+
+	return "CON {kura's menu}"
+
+
+def handle_post_registration(text): // this is for someone with state == 1. i.e your main app is here
+	pass
+
+
+
+session_id = form["sessionId"]
+serviceCode = form["serviceCode"]
+phone_number = form["phoneNumber"]
+text = form["text"]
+
+user = {}
+
+upon hitting the end point:
+	check if user exist in fake_database by indexing fake_db with phone number. eg
+		user = fake_db["phone"]
+
+	if user:
+ 		if user["state"] == 0:
+			return handle_pre_registration(text, phone)
+ 		if user["state"] == 1:
+			return handle_post_registration(text)
+
+
+	elif not user: (i.e user still equal to {})
+		append(
+		{
+		"name": "",
+		"created": Datetime,
+		"phone": "0901234576",
+		"location": "",
+		"state": 0,
+		"history": []
+		}
+			)
+		return "CON display  message asking for name"
+

@@ -57,27 +57,33 @@ async def index(request: Request):
 
     user = {}
 
-
-
-    # if phone_number in fake_db.get("data"):
     for i in fake_db.get("data"):
-        if i["phone"] == str(phone_number):
+        if i.get("phone") == str(phone_number):
             user = i
+            print(i)
             break
 
-    if user:
-        if text == "":
-            return str("CON welcome\n please send 1")
-        elif text == "1":
-            return "END welldone you can read english"
-        else:
-            return "END dimwit"
+
+
+    # # if phone_number in fake_db.get("data"):
+    # for i in fake_db.get("data"):
+    #     if i["phone"] == str(phone_number):
+    #         user = i
+    #         break
+
+    # if user:
+    if text == "":
+        return str("CON welcome\n please send 1")
+    elif text == "1":
+        return "END welldone you can read english"
     else:
-        return str("CON welcome\n what is your name")
+        return "END dimwit"
+    # else:
+    #     return str("CON welcome\n what is your name")
 
 
-a = 0
-b = ""
-c = []
-d = {}
-e = ()
+# a = 0
+# b = ""
+# c = []
+# d = {}
+# e = ()

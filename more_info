@@ -37,7 +37,7 @@ def handle_pre_registration(text,phone):   // this is for someone with state == 
 	For now I only implemented logic to only ask for name for complete registration using 'state' to check for level of registration
 	"""
 	user = fake_db.get("phone")   // we use this to get the user info in our db
-	user.update({"state": 1})   // this is used to chnge state of user
+	// user.update({"state": 1})   // this is used to chnge state of user
 	user.update({"name": text})    // this is used to set name of user. the text
 	fake_db["phone"].update(user)
 
@@ -54,14 +54,13 @@ serviceCode = form["serviceCode"]
 phone_number = form["phoneNumber"]
 text = form["text"]
 
-user = {}
 
 upon hitting the end point:
 	check if user exist in fake_database by indexing fake_db with phone number. eg
 		user = fake_db["phone"]
 
 	if user:
- 		if user["state"] == 0:
+ 		if user["name"] == "":
 			return handle_pre_registration(text, phone)
  		if user["state"] == 1:
 			return handle_post_registration(text)
@@ -79,4 +78,22 @@ upon hitting the end point:
 		}
 			)
 		return "CON display  message asking for name"
+
+
+"""
+s = "salman*1"
+s_list = s.split("*")
+// s_list = ['salman', '1']
+
+j = 0
+real_string = ""
+for i in s_list:
+    if i.isdigit():
+        for i in s_list[j:]:
+            real_string += i + "*"
+        real_string = "".join(s_list[j:])
+    j += 1
+
+"""
+
 
